@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Team Collaboration Tool</title>
+    <script>
+        async function generateResponse() {
+            const prompt = document.getElementById("prompt").value;
+            const responseDiv = document.getElementById("response");
+
+            responseDiv.textContent = "Generating...";
+            const response = await fetch('/api/generate', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ prompt: "Create a new slogan" })
+})
+.then(response => response.json())
+.then(data => console.log(data))
+.catch(error => console.error('Error:', error));
+
+            ;
+            const data = await response.json();
+            responseDiv.textContent = data.response || data.error;
+        }
+    </script>
+</head>
+<body>
+    <h1>AI Team Collaboration Tool</h1>
+    <textarea id="prompt" placeholder="Enter your prompt here..."></textarea><br>
+    <button onclick="generateResponse()">Generate</button>
+    <div id="response"></div>
+</body>
+</html>
